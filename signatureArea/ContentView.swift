@@ -2,7 +2,9 @@
 //  ContentView.swift
 //  signatureArea
 //
-//  Created by Luis Rivera on 09/12/23.
+//  Created by N0m4d on 09/12/23.
+//  instagram: @nomada.dev
+//  github: https://github.com/n0m4da
 //
 import PencilKit
 import SwiftUI
@@ -12,6 +14,7 @@ struct PencilKitRepresentable : UIViewRepresentable {
         
     func makeUIView(context: Context) -> PKCanvasView {
         canvas.drawingPolicy = .anyInput
+        
         return canvas
     }
     func updateUIView(_ uiView: PKCanvasView, context: Context) { }
@@ -19,11 +22,13 @@ struct PencilKitRepresentable : UIViewRepresentable {
 
 struct ContentView: View {
     //MARK: - PROPERTIES
-    let canvasView = PencilKitRepresentable()
+    @State private var canvasView = PencilKitRepresentable()
     let imgRect = CGRect(x: .infinity, y: .infinity, width: 400.0, height: 200)
     
     func saveSignature() {
-        var image = canvasView.canvas.drawing.image(from: imgRect, scale: 1.0)
+        let image = canvasView.canvas.drawing.image(from: imgRect, scale: 1.0)
+        
+        //MARK: - do what you need!
     }
     
     
@@ -31,13 +36,17 @@ struct ContentView: View {
     var body: some View {
         VStack {
             Text ("Sign here:")
-            canvasView.frame(height: 100.0)
+            canvasView.frame(height: 200)
                 .border(Color.gray, width: 5)
             Button(action: {
             
                 self.saveSignature()
             }) {
                 Text("Save Signature")
+            }
+            
+            Button("Clear"){
+                canvasView.canvas.drawing = PKDrawing()
             }
         }
     }
